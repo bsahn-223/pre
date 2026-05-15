@@ -68,7 +68,7 @@ const CalendarSection = () => {
         <Calendar>
           <Calendar.Days />
 
-          <Calendar.Dates startDate={2} endDate={29} activeDate={8} />
+          <Calendar.Dates startDate={-2} endDate={24} activeDate={5} />
         </Calendar>
       </SlideUp>
     </section>
