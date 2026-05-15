@@ -7,7 +7,8 @@ const Calendar = ({ children }: { children: ReactNode }) => {
   return <div className="w-full grid grid-cols-7 gap-y-12pxr">{children}</div>;
 };
 
-Calendar.Days = () => {
+// 1. Calendar.Days 컴포넌트에 기입용 기명 함수 스타일 적용
+const CalendarDays = () => {
   return ["일", "월", "화", "수", "목", "금", "토"].map((day, i) => (
     <Text
       key={day}
@@ -21,33 +22,30 @@ Calendar.Days = () => {
   ));
 };
 
-Calendar.Dates = ({
+// 2. Calendar.Dates 컴포넌트에 기입용 기명 함수 스타일 적용
+const CalendarDates = ({
   startDate,
   endDate,
   activeDate,
-  startDayOffset = 0 // 기본값은 0(일요일 시작)으로 설정
+  startDayOffset = 0
 }: {
   startDate: number;
   endDate: number;
   activeDate: number;
-  startDayOffset?: number; // 부모로부터 시작 요일 오프셋을 받도록 추가
+  startDayOffset?: number;
 }) => {
   const emptySpaces = Array.from({ length: startDayOffset });
   const totalDates = Array.from({ length: endDate - startDate + 1 });
 
   return (
     <>
-      {/* 1. 부모에게서 전달받은 오프셋만큼 빈 칸을 생성합니다. */}
       {emptySpaces.map((_, index) => (
         <div key={`empty-${index}`} className="w-full" />
       ))}
 
-      {/* 2. 실제 날짜들을 순서대로 렌더링합니다. */}
       {totalDates.map((_, i) => {
         const currentDate = startDate + i;
         const isActive = currentDate === activeDate;
-        
-        // 전달받은 오프셋을 고려하여 정확한 일요일 위치를 계산합니다.
         const isSunday = (i + startDayOffset) % 7 === 0;
 
         return (
@@ -73,5 +71,12 @@ Calendar.Dates = ({
     </>
   );
 };
+
+// 서브 컴포넌트 등록 및 명시적 displayName 선언 (ESLint 에러 해결)
+Calendar.Days = CalendarDays;
+Calendar.Days.displayName = "Calendar.Days";
+
+Calendar.Dates = CalendarDates;
+Calendar.Dates.displayName = "Calendar.Dates";
 
 export default Calendar;
