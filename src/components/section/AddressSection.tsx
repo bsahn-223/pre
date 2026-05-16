@@ -90,10 +90,10 @@ const AddressSection = () => {
             display="block"
             className="w-full p-10pxr text-12pxr leading-22pxr bg-[#F4F4F4] text-[#474747] whitespace-pre-wrap"
           >
-            지하철 이용 : 2호선 강변역 1번 또는 2번 출구 방향으로 나오면 테크노마트 
-            지하 1층과 바로 연결됩니다.
+            {"지하철 이용 : 2호선 강변역 1번 또는 2번 출구 방향으로 나오면 테크노마트 
+            지하 1층과 바로 연결됩니다.\n
             자가용 이용 : 지하 3층 또는 지하 4층의 100번대 구역에 주차하면 
-            웨딩홀 전용 엘리베이터와 가장 가깝습니다.
+            웨딩홀 전용 엘리베이터와 가장 가깝습니다."}
           </Text>
         </SlideUp>
         <Spacing size={20} />
