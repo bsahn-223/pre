@@ -21,7 +21,7 @@ import Title from "./Title";
 import useIsInView from "@/hooks/useIsInView";
 
 const getGalleryImageLoader = (number: number) => {
-  return `/gallery/gallery_${number < 10 ? `0${number}` : number}.jpg`;
+  return `/gallery/gallery_${number < 10 ? `0${number}` : number}.JPG`;
 };
 const IMAGES = Array.from({ length: 10 }, (_, i) => ({
   url: getGalleryImageLoader(i + 1)
