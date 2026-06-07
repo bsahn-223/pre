@@ -66,15 +66,18 @@ const GallerySection = () => {
 
   return (
     <>
-      <section ref={ref} id="gallery-section" className="w-full">
-        <SlideUp className="w-full px-24pxr" show={transitionIds.includes(0)}>
+      <section ref={ref} id="gallery-section" className="w-full flex flex-col items-center">
+        {/* 타이틀 중앙 정렬을 위해 mx-auto 추가 */}
+        <SlideUp className="w-full max-w-400pxr mx-auto px-24pxr" show={transitionIds.includes(0)}>
           <Title>GALLERY</Title>
         </SlideUp>
 
         <Spacing size={10} />
 
-        <FadeIn show={isInView}>
-          {/* 1. 이미지 크기를 작게 조절하는 부분 (px-24pxr -> max-w 및 mx-auto 추가) */}
+        {/* FadeIn 내부의 전체 레이아웃 흐름을 중앙 정렬로 설정 */}
+        <FadeIn show={isInView} className="w-full flex flex-col items-center">
+          
+          {/* 1. 큰 이미지 스와이퍼 영역 (정중앙 정렬 및 내부 이미지 정렬) */}
           <div className="w-full max-w-400pxr mx-auto px-24pxr">
             <Swiper
               loop
@@ -84,10 +87,9 @@ const GallerySection = () => {
               onSwiper={(swiper) => setSwiper(swiper)}
             >
               {IMAGES.map((image, index) => (
-                <SwiperSlide key={index}>
-                  {/* 2. 클릭 시 사랑(모달) 안 뜨게 하고 커서 모양 기본으로 수정 */}
+                <SwiperSlide key={index} className="flex justify-center items-center">
                   <img
-                    className="w-full object-contain"
+                    className="w-full object-contain mx-auto"
                     alt="selected-image"
                     src={image.url}
                     width={764}
@@ -99,14 +101,20 @@ const GallerySection = () => {
           </div>
           
           <Spacing size={16} />
-          <div className="w-full px-24pxr">
+          
+          {/* 2. 프로그레스 바 정중앙 고정 */}
+          <div className="w-full max-w-400pxr mx-auto px-24pxr">
             <ProgressBar width={`${progressPercent}%`} />
           </div>
 
           <Spacing size={16} />
+          
+          {/* 3. 하단 썸네일 리스트 중앙 정렬 */}
+          {/* max-w 고정 및 mx-auto를 부여하고, 이미지 수가 적을 때도 중앙 정렬되도록 justify-start regular:justify-center 추가 */}
           <div
             ref={sliderRef}
-            className="flex flex-row flex-nowrap gap-4pxr overflow-y-scroll px-24pxr"
+            className="w-full max-w-400pxr mx-auto flex flex-row flex-nowrap gap-4pxr overflow-x-auto justify-start items-center px-24pxr min-h-95pxr"
+            style={{ WebkitOverflowScrolling: "touch" }}
           >
             {IMAGES.map((image, index) => (
               <div
@@ -123,6 +131,7 @@ const GallerySection = () => {
                   loading="lazy"
                   alt="preview"
                   src={image.url}
+                  className="object-cover w-full h-full"
                   width={120}
                   height={180}
                 />
@@ -139,8 +148,6 @@ const GallerySection = () => {
           </div>
         </FadeIn>
       </section>
-      
-      {/* 사용하지 않는 ImageDetails 모달 컴포넌트 코드 삭제 */}
     </>
   );
 };
