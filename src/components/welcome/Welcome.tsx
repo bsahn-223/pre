@@ -93,13 +93,18 @@ const Welcome = ({
       ref={ref}
       onClick={() => setVisible(false)}
       style={{ height: "100svh", transition: "opacity 1s" }}
-      className={`relative  bg-white w-full flex flex-col justify-between overflow-hidden ${className} ${
+      className={`relative bg-white w-full flex flex-col justify-between overflow-hidden ${className} ${
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
+      {/* 픽스된 이미지 영역: mask-image를 스타일로 직접 주입했습니다. */}
       <img
         ref={imageRef}
         className="w-full absolute bottom-0 left-0"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 25%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 25%)",
+        }}
         alt="wedding"
         src="/welcome/intro.JPEG"
         width={860}
@@ -108,6 +113,7 @@ const Welcome = ({
           setImageLoaded(true);
         }}
       />
+      
       <Flex className={`mt-44pxr z-10`}>
         {TITLE.map((text, index) => (
           <SlideUp key={index} show={transitionIds.includes(index)}>
