@@ -153,7 +153,7 @@ const IntroduceSection = ({ visitedWelcome }: { visitedWelcome: boolean }) => {
       <Spacing size={18} />
       <Flex align="start" className="gap-20pxr px-24pxr mt-10pxr">
         {[
-          `좋아하는 노래의 가사처럼\n슬픔은 없이, 항상 기쁜 마음으로\n살아가면 좋겠지만`,
+          `어떤 노래의 가사처럼\n슬픔은 없이, 항상 기쁜 마음으로\n살아가면 좋겠지만`,
           `우리의 가장 큰 바람은\n슬픔은 슬픔대로, 기쁨은 기쁨대로\n함께 흘려보내며\n오래오래 함께하는 것입니다.`,
           `오셔서 저희 함께할 날들을 축복해 주시면\n감사하겠습니다.`
         ].map((text, i) => (
