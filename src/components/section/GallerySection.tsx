@@ -67,17 +67,15 @@ const GallerySection = () => {
   return (
     <>
       <section ref={ref} id="gallery-section" className="w-full flex flex-col items-center">
-        {/* 타이틀 중앙 정렬을 위해 mx-auto 추가 */}
         <SlideUp className="w-full max-w-400pxr mx-auto px-24pxr" show={transitionIds.includes(0)}>
           <Title>GALLERY</Title>
         </SlideUp>
 
         <Spacing size={10} />
 
-        {/* FadeIn 내부의 전체 레이아웃 흐름을 중앙 정렬로 설정 */}
         <FadeIn show={isInView} className="w-full flex flex-col items-center">
           
-          {/* 1. 큰 이미지 스와이퍼 영역 (정중앙 정렬 및 내부 이미지 정렬) */}
+          {/* 1. 큰 이미지 스와이퍼 영역 */}
           <div className="w-full max-w-400pxr mx-auto px-24pxr">
             <Swiper
               loop
@@ -85,11 +83,23 @@ const GallerySection = () => {
               slidesPerView={1}
               onSlideChange={(slider) => setSlectedIndex(slider.realIndex)}
               onSwiper={(swiper) => setSwiper(swiper)}
+              // [수정] Swiper 자체와 내부 wrapper 컴포넌트까지 세로 정렬이 먹히도록 스타일을 지정합니다.
+              style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                height: "500px" // 가장 긴 세로 사진 기준 높이를 명시적으로 확보합니다.
+              }}
             >
               {IMAGES.map((image, index) => (
-                <SwiperSlide key={index} className="flex justify-center items-center">
+                <SwiperSlide 
+                  key={index} 
+                  // [수정] !important 역할을 하는 스타일 주입으로 가로형 사진이 상단으로 붙는 현상을 완전히 방지합니다.
+                  className="flex justify-center items-center"
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}
+                >
                   <img
-                    className="w-full object-contain mx-auto"
+                    // max-h를 컨테이너 높이(500px)와 일치시켜 가로/세로 사진 모두 정중앙에 갇히도록 처리했습니다.
+                    className="w-full max-h-[500px] object-contain mx-auto"
                     alt="selected-image"
                     src={image.url}
                     width={764}
@@ -109,8 +119,7 @@ const GallerySection = () => {
 
           <Spacing size={16} />
           
-          {/* 3. 하단 썸네일 리스트 중앙 정렬 */}
-          {/* max-w 고정 및 mx-auto를 부여하고, 이미지 수가 적을 때도 중앙 정렬되도록 justify-start regular:justify-center 추가 */}
+          {/* 3. 하단 썸네일 리스트 */}
           <div
             ref={sliderRef}
             className="w-full max-w-400pxr mx-auto flex flex-row flex-nowrap gap-4pxr overflow-x-auto justify-start items-center px-24pxr min-h-95pxr"
