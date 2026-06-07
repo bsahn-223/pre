@@ -97,7 +97,7 @@ const AddressSection = () => {
         <SlideUp id="map" show={transitionIds.includes(TITLE.length + 4)}>
           <Image
             quality={100}
-            src={"/IMG_0025.png"}
+            src={"/location.PNG"}
             alt="map"
             width={382}
             height={245}
