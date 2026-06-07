@@ -67,7 +67,7 @@ const CoupleSection = () => {
       <SlideUp show={transitionIds.includes(TITLE.length)}>
         <CoupleImage
           url="/profile/profile_01.JPEG"
-          person={{ name: "안병섭", desc: "의준, 미향의 아들" }}
+          person={{ name: "안병섭", desc: "안의준, 유미향의 장남" }}
         />
 
         <Spacing size={6} />
@@ -75,7 +75,7 @@ const CoupleSection = () => {
       <SlideUp show={transitionIds.includes(TITLE.length + 1)}>
         <CoupleImage
           url="/profile/profile_02.JPEG"
-          person={{ name: "안희연", desc: "창덕, 영미의 딸" }}
+          person={{ name: "안희연", desc: "안창덕, 김영미의 장녀" }}
         />
       </SlideUp>
     </section>
