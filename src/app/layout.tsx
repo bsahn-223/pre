@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: "9월 5일 토요일 오전 11시 웨딩스퀘어 강변",
     images: [
       {
-        url: "/profile/IMG_8813.png", // Must be an absolute URL
+        url: "https://photo.qudtjq.duckdns.org/mo/sharing/XnbeLm4Ds", // Must be an absolute URL
         width: 720,
         height: 720
       }
