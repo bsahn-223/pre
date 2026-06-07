@@ -9,9 +9,9 @@ import ScrollArrow from "../../../public/scroll_arrow.svg";
 import SlideUp from "../SlideUp";
 import Text from "../Text";
 import { useInterval } from "@/hooks/useInterval";
-import useIsInView from "@/hooks/useIsInView";
 
 const TITLE = ["THE", "WEDDING", "OF", "BYENGSUP", "AND", "HEEYEON"];
+
 const Welcome = ({
   className,
   onNext
@@ -21,7 +21,26 @@ const Welcome = ({
 }) => {
   const [transitionIds, setTransitionIds] = useState<number[]>([]);
   const [startTransition, setStartTransition] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [hidden, setHidden] = useState(false);
 
+  const ref = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  // 1. 컴포넌트가 로드되면 바로 텍스트 애니메이션 시작 트리거를 켭니다.
+  // (카카오톡 브라우저의 뷰포트 오작동을 방지하기 위해 useIsInView 대신 useEffect 사용)
+  useEffect(() => {
+    setStartTransition(true);
+  }, []);
+
+  // 2. 이미지 로드 체크
+  useEffect(() => {
+    if (!imageRef.current) return;
+    imageRef.current.complete && setImageLoaded(true);
+  }, [imageRef]);
+
+  // 3. 타이틀 텍스트 순차 등장 타이머
   useInterval(() => {
     if (
       !startTransition ||
@@ -35,8 +54,7 @@ const Welcome = ({
     });
   }, 100);
 
-  const [imageLoaded, setImageLoaded] = useState(false);
-
+  // 4. 하단 서브 텍스트 및 화살표 등장 타이머
   useEffect(() => {
     if (!startTransition || !imageLoaded) return;
 
@@ -54,9 +72,7 @@ const Welcome = ({
     };
   }, [startTransition, imageLoaded]);
 
-  const [visible, setVisible] = useState(true);
-  const [hidden, setHidden] = useState(false);
-
+  // 5. 클릭 시 페이드아웃 및 닫기 처리
   useEffect(() => {
     if (visible) return;
 
@@ -75,29 +91,24 @@ const Welcome = ({
     }
   }, [hidden, onNext]);
 
-  const ref = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    if (!imageRef.current) return;
-
-    imageRef.current.complete && setImageLoaded(true);
-  }, [imageRef]);
-
-  useIsInView(ref, () => setStartTransition(true));
-
   if (hidden) return null;
 
   return (
     <div
       ref={ref}
       onClick={() => setVisible(false)}
-      style={{ height: "100svh", transition: "opacity 1s" }}
+      // [핵심 변경] 사용자가 터치해서 스크롤(스와이프)하는 동작을 원천 차단합니다.
+      onTouchMove={(e) => e.preventDefault()}
+      style={{ 
+        height: "100svh", 
+        transition: "opacity 1s",
+        touchAction: "none" // CSS에서도 터치 액션을 완전히 막아 화면을 고정합니다.
+      }}
       className={`relative bg-white w-full flex flex-col justify-between overflow-hidden ${className} ${
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* 픽스된 이미지 영역: mask-image를 스타일로 직접 주입했습니다. */}
+      {/* 윗부분을 자연스럽게 흐리게 만드는 mask-image 스타일 적용 */}
       <img
         ref={imageRef}
         className="w-full absolute bottom-0 left-0"
@@ -135,6 +146,7 @@ const Welcome = ({
           </Flex>
         </SlideUp>
       </Flex>
+      
       <SlideUp
         show={transitionIds.includes(TITLE.length + 1)}
         className=" mb-40pxr cursor-pointer mx-auto z-10"
