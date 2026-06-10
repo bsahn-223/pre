@@ -5,19 +5,21 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Address from "./Address";
 import Image from "next/image";
 import Navigations from "./Navigations";
+// RollingBanner 임포트 제거됨
 import SlideUp from "../SlideUp";
 import Spacing from "../Spacing";
 import Text from "../Text";
 import Title from "./Title";
 import useIsInView from "@/hooks/useIsInView";
 
-const TITLE = ["wedding", "square"," ", " "];
+const TITLE = ["wedding", "square", " ", " "];
 const AddressSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [transitionIds, setTransitionIds] = useState<number[]>([]);
 
   const intervalId = useRef<NodeJS.Timeout | null>(null);
   const handleTransition = useCallback(() => {
+    // 순차적 화면 표시 로직
     setTimeout(() => {
       setTransitionIds((prev) => (prev.length === 0 ? [0, 1, 2, 3] : prev));
     }, 0);
@@ -63,6 +65,8 @@ const AddressSection = () => {
           </SlideUp>
         ))}
         <Spacing size={10} />
+        
+        {/* 주소 및 교통 안내 섹션 */}
         <SlideUp show={transitionIds.includes(TITLE.length)}>
           <Address
             title="웨딩스퀘어 강변"
@@ -70,6 +74,7 @@ const AddressSection = () => {
           />
         </SlideUp>
         <Spacing size={20} />
+        
         <SlideUp show={transitionIds.includes(TITLE.length + 1)}>
           <Address
             title="자가용 이용 시"
@@ -77,6 +82,7 @@ const AddressSection = () => {
           />
         </SlideUp>
         <Spacing size={20} />
+        
         <SlideUp show={transitionIds.includes(TITLE.length + 2)}>
           <Address
             title="지하철 이용 시"
@@ -84,6 +90,7 @@ const AddressSection = () => {
           />
         </SlideUp>
         <Spacing size={20} />
+        
         <SlideUp show={transitionIds.includes(TITLE.length + 3)}>
           <Text
             display="block"
@@ -93,6 +100,8 @@ const AddressSection = () => {
           </Text>
         </SlideUp>
         <Spacing size={20} />
+        
+        {/* 지도 및 네비게이션 섹션 */}
         <SlideUp id="map" show={transitionIds.includes(TITLE.length + 4)}>
           <Image
             quality={100}
@@ -109,10 +118,8 @@ const AddressSection = () => {
           <Navigations />
         </SlideUp>
       </section>
-
-      <SlideUp show={transitionIds.includes(TITLE.length + 6)}>
-        <Spacing size={80} />
-      </SlideUp>
+      
+      {/* RollingBanner 및 하단 여백 제거 완료 */}
     </>
   );
 };
