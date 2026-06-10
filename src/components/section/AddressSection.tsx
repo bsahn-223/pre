@@ -5,7 +5,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Address from "./Address";
 import Image from "next/image";
 import Navigations from "./Navigations";
-import RollingBanner from "../RollingBanner";
 import SlideUp from "../SlideUp";
 import Spacing from "../Spacing";
 import Text from "../Text";
@@ -113,7 +112,6 @@ const AddressSection = () => {
 
       <SlideUp show={transitionIds.includes(TITLE.length + 6)}>
         <Spacing size={80} />
-        //<RollingBanner /> 
       </SlideUp>
     </>
   );
