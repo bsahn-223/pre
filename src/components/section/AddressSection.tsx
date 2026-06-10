@@ -113,7 +113,7 @@ const AddressSection = () => {
 
       <SlideUp show={transitionIds.includes(TITLE.length + 6)}>
         <Spacing size={80} />
-        <RollingBanner />
+        //<RollingBanner /> 
       </SlideUp>
     </>
   );
