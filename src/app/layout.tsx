@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: "9월 5일 토요일 오전 11시 웨딩스퀘어 강변",
     images: [
       {
-        url: "https://qudtjq.duckdns.org/wedding_welcome.JPEG", // Must be an absolute URL
+        url: "https://qudtjq.duckdns.org/welcome_wedding.JPEG", // Must be an absolute URL
         width: 720,
         height: 720
       }
