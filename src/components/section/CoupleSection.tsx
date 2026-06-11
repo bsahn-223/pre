@@ -28,7 +28,7 @@ const CoupleSection = () => {
         return prev.concat(prev.length);
       });
     }
-  }, 100);
+  }, 50);
   useEffect(() => {
     if (!startTransition) return;
 
@@ -41,7 +41,7 @@ const CoupleSection = () => {
           }
           return prev.concat(prev.length);
         });
-      }, 300);
+      }, 200);
     }, 300);
   }, [startTransition]);
 
