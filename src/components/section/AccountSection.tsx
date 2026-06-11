@@ -16,52 +16,29 @@ const TITLE = ["GIFT", "FOR", "WEDDING", "CEREMONY"];
 
 const AccountSection = ({ onDone }: { onDone: () => void }) => {
   const [transitionIds, setTransitionIds] = useState<number[]>([]);
-
   const [startTransition, setStartTransition] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  // 1. 글자 및 아코디언 상자들이 차례대로 타타탁 켜지는 타이머 (50ms 간격으로 매우 빠르게)
   useInterval(() => {
-    if (!startTransition || transitionIds.length >= TITLE.length) return;
+    if (!startTransition || transitionIds.length >= TITLE.length + 3) return;
 
     setTransitionIds((prev) => {
+      // 순차적으로 다음 인덱스를 안전하게 추가
+      if (prev.includes(prev.length)) return prev;
       return prev.concat(prev.length);
     });
   }, 50);
+
+  // 뷰포트에 감지되면 애니메이션 시작
   useIsInView(ref, () => setStartTransition(true));
 
-  const [callTimeout, setCallTimeout] = useState(false);
-
-  useInterval(() => {
-    if (!callTimeout || transitionIds.length >= TITLE.length + 2) return;
-
-    setTransitionIds((prev) => {
-      return prev.concat(prev.length);
-    });
-  }, 50);
-
+  // 2. 애니메이션이 모두 끝난 후 부모 컴포넌트에 알림
   useEffect(() => {
-    if (!startTransition) return;
-
-    setTimeout(() => {
-      setCallTimeout(true);
-    }, 200);
-
-    const intervalId = setInterval(() => {
-      setTransitionIds((prev) => {
-        if (prev.length === TITLE.length + 2) {
-          clearInterval(intervalId);
-          return prev;
-        }
-        return prev.concat(prev.length);
-      });
-    }, 50);
-
-    const timeoutId = setTimeout(() => {
-      setTransitionIds((prev) => prev.concat(TITLE.length + 2));
-      clearTimeout(timeoutId);
-    }, 200);
-    onDone();
-  }, [startTransition]);
+    if (transitionIds.length >= TITLE.length + 3) {
+      onDone();
+    }
+  }, [transitionIds, onDone]);
 
   return (
     <>
@@ -73,7 +50,7 @@ const AccountSection = ({ onDone }: { onDone: () => void }) => {
         ))}
         <Spacing size={20} />
         
-        {/* 신랑측 아코디언 */}
+        {/* 신랑측 아코디언 (인덱스 4) */}
         <SlideUp show={transitionIds.includes(TITLE.length)}>
           <Arcodion>
             <Arcodion.Header className="cursor-pointer w-full py-21.5pxr border-t border-black">
@@ -99,7 +76,7 @@ const AccountSection = ({ onDone }: { onDone: () => void }) => {
                 }}
               />
               <Spacing size={12} />
-              {/* 신랑 어머님 계좌 (필요 없으시다면 이 <Account />와 바로 위 <Spacing />을 지우시면 됩니다) */}
+              {/* 신랑 어머님 계좌 */}
               <Account
                 name="어머니 OOO"
                 bankInfo={{
@@ -113,7 +90,7 @@ const AccountSection = ({ onDone }: { onDone: () => void }) => {
         
         <Spacing size={20} />
         
-        {/* 신부측 아코디언 */}
+        {/* 신부측 아코디언 (인덱스 5) */}
         <SlideUp show={transitionIds.includes(TITLE.length + 1)}>
           <Arcodion>
             <Arcodion.Header className="cursor-pointer w-full py-21.5pxr border-t border-black">
@@ -154,6 +131,7 @@ const AccountSection = ({ onDone }: { onDone: () => void }) => {
       
       <Spacing size={100} />
       
+      {/* 푸터 섹션 (인덱스 6) */}
       <SlideUp show={transitionIds.includes(TITLE.length + 2)}>
         <FooterSection />
       </SlideUp>
