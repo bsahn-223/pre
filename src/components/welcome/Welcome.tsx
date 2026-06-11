@@ -137,10 +137,15 @@ const Welcome = ({
             </Text>
           </SlideUp>
         ))}
+        {/* 기존 코드의 이 부분을 찾아서 아래처럼 변경해주세요 */}
         <SlideUp show={transitionIds.includes(TITLE.length)}>
-          <Flex className={`text-15pxr leading-18pxr mt-16pxr`}>
-            <Text display="block">2026.09.05, SATURDAY 11:00</Text>
-            <Text display="block" className="mt-8pxr">
+          <Flex 
+            className={`text-15pxr leading-18pxr mt-16pxr 
+              bg-white/60 backdrop-blur-sm 
+              px-16pxr py-12pxr rounded-12pxr max-w-fit`}
+          >
+            <Text display="block" className="text-black">2026.09.05, SATURDAY 11:00</Text>
+            <Text display="block" className="mt-8pxr text-black">
               WEDDINGSQUARE
             </Text>
           </Flex>
