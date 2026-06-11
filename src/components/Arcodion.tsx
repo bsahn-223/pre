@@ -24,6 +24,7 @@ const useArcodion = () => {
   }
   return context;
 };
+
 const Arcodion = ({ children }: { children: ReactNode }) => {
   const [visible, setVisible] = useState(false);
   const toggle = useCallback(() => setVisible((prev) => !prev), []);
@@ -67,7 +68,9 @@ const Content = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    setMaxHeight(visible ? 1000 : 0);
+    // 고정값 1000 대신, 콘텐츠의 실제 자식 요소 높이(scrollHeight)를 계산하여 
+    // 불필요한 여백 계산으로 인한 애니메이션 딜레이를 없앱니다.
+    setMaxHeight(visible ? ref.current.scrollHeight : 0);
   };
 
   useEffect(() => {
@@ -80,7 +83,11 @@ const Content = ({ children }: { children: ReactNode }) => {
       className={`${
         visible ? "arcodion-content" : "arcodion-content-close"
       } overflow-hidden`}
-      style={{ maxHeight }}
+      // transition 시간을 0.15초로 단축하여 클릭 시 계좌번호가 휙 빠르게 나타나도록 설정했습니다.
+      style={{ 
+        maxHeight, 
+        transition: "max-height 0.15s ease-in-out" 
+      }}
     >
       {children}
     </div>
