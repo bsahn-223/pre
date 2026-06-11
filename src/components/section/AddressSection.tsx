@@ -33,18 +33,18 @@ const AddressSection = () => {
           }
           return prev.concat(prev.length);
         });
-      }, 200);
-    }, 1000);
+      }, 100);
+    }, 500);
 
     setTimeout(() => {
       setTransitionIds((prev) => prev.concat(prev.length));
-    }, 2000);
+    }, 1000);
 
     setTimeout(() => {
       setTransitionIds((prev) =>
         prev.concat([prev.length, prev.length + 1, prev.length + 2])
       );
-    }, 2200);
+    }, 1200);
   }, []);
 
   useIsInView(ref, handleTransition);
