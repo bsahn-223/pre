@@ -38,7 +38,7 @@ const IntroduceSection = ({ visitedWelcome }: { visitedWelcome: boolean }) => {
         }
         return prev.concat(prev.length);
       });
-    }, 200);
+    }, 100);
 
     const timeoutID = setTimeout(() => {
       intervalId2.current = setInterval(() => {
@@ -49,8 +49,8 @@ const IntroduceSection = ({ visitedWelcome }: { visitedWelcome: boolean }) => {
           }
           return prev.concat(prev.length);
         });
-      }, 400);
-    }, 1000);
+      }, 200);
+    }, 700);
 
     const timeoutID2 = setTimeout(() => {
       intervalId3.current = setInterval(() => {
@@ -61,8 +61,8 @@ const IntroduceSection = ({ visitedWelcome }: { visitedWelcome: boolean }) => {
           }
           return prev.concat(prev.length);
         });
-      }, 900);
-    }, 1800);
+      }, 500);
+    }, 1200);
   }, []);
 
   useEffect(() => {
