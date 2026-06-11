@@ -69,19 +69,19 @@ const AccountSection = ({ onDone }: { onDone: () => void }) => {
               <Spacing size={12} />
               {/* 신랑 아버님 계좌 */}
               <Account
-                name="아버지 OOO"
+                name="아버지 안의준"
                 bankInfo={{
-                  bankName: "OO은행",
-                  accountNumber: "000-000-000000"
+                  bankName: "농협",
+                  accountNumber: "32705152020476"
                 }}
               />
               <Spacing size={12} />
               {/* 신랑 어머님 계좌 */}
               <Account
-                name="어머니 OOO"
+                name="어머니 유미향"
                 bankInfo={{
-                  bankName: "OO은행",
-                  accountNumber: "000-000-000000"
+                  bankName: "농협",
+                  accountNumber: "33105051029611"
                 }}
               />
             </Arcodion.Content>
@@ -109,19 +109,19 @@ const AccountSection = ({ onDone }: { onDone: () => void }) => {
               <Spacing size={12} />
               {/* 신부 아버님 계좌 */}
               <Account
-                name="아버지 OOO"
+                name="아버지 안창덕"
                 bankInfo={{
-                  bankName: "OO은행",
-                  accountNumber: "000-000-000000"
+                  bankName: "농협",
+                  accountNumber: "23512031480"
                 }}
               />
               <Spacing size={12} />
               {/* 신부 어머님 계좌 */}
               <Account
-                name="어머니 OOO"
+                name="어머니 김영미"
                 bankInfo={{
-                  bankName: "OO은행",
-                  accountNumber: "000-000-000000"
+                  bankName: "농협",
+                  accountNumber: "31701456061441"
                 }}
               />
             </Arcodion.Content>
