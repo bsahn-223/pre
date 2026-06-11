@@ -60,11 +60,11 @@ const Welcome = ({
 
     const timeout = setTimeout(() => {
       setTransitionIds((prev) => prev.concat(prev.length));
-    }, 1200);
+    }, 500);
 
     const timeout2 = setTimeout(() => {
       setTransitionIds((prev) => prev.concat(prev.length));
-    }, 2000);
+    }, 1000);
 
     return () => {
       clearTimeout(timeout);
@@ -78,7 +78,7 @@ const Welcome = ({
 
     const timeoutId = setTimeout(() => {
       setHidden(true);
-    }, 1100);
+    }, 500);
 
     return () => {
       clearTimeout(timeoutId);
