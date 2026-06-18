@@ -29,7 +29,6 @@ const Welcome = ({
   const imageRef = useRef<HTMLImageElement>(null);
 
   // 1. 컴포넌트가 로드되면 바로 텍스트 애니메이션 시작 트리거를 켭니다.
-  // (카카오톡 브라우저의 뷰포트 오작동을 방지하기 위해 useIsInView 대신 useEffect 사용)
   useEffect(() => {
     setStartTransition(true);
   }, []);
@@ -97,18 +96,16 @@ const Welcome = ({
     <div
       ref={ref}
       onClick={() => setVisible(false)}
-      // [핵심 변경] 사용자가 터치해서 스크롤(스와이프)하는 동작을 원천 차단합니다.
       onTouchMove={(e) => e.preventDefault()}
       style={{ 
         height: "100svh", 
         transition: "opacity 1s",
-        touchAction: "none" // CSS에서도 터치 액션을 완전히 막아 화면을 고정합니다.
+        touchAction: "none"
       }}
       className={`relative bg-white w-full flex flex-col justify-between overflow-hidden ${className} ${
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* 윗부분을 자연스럽게 흐리게 만드는 mask-image 스타일 적용 */}
       <img
         ref={imageRef}
         className="w-full absolute bottom-0 left-0"
@@ -137,17 +134,30 @@ const Welcome = ({
             </Text>
           </SlideUp>
         ))}
-        {/* 기존 코드의 이 부분을 찾아서 아래처럼 변경해주세요 */}
+        
+        {/* [수정 부분] 본식 및 사전 피로연 구분 안내 정보 박스 */}
         <SlideUp show={transitionIds.includes(TITLE.length)}>
           <Flex 
-            className={`text-15pxr leading-18pxr mt-16pxr 
-              bg-white/60 backdrop-blur-sm 
-              px-16pxr py-12pxr rounded-12pxr max-w-fit`}
+            className={`text-13pxr leading-16pxr mt-16pxr 
+              bg-white/70 backdrop-blur-sm 
+              px-16pxr py-14pxr rounded-12pxr max-w-fit gap-y-10pxr`}
           >
-            <Text display="block" className="text-black">2026.09.05, SATURDAY 11:00</Text>
-            <Text display="block" className="mt-8pxr text-black">
-              WEDDINGSQUARE
-            </Text>
+            {/* 사전 피로연 정보 */}
+            <div>
+              <Text display="inline-block" className="font-bold text-black border border-black/30 rounded-4pxr px-4pxr py-1pxr text-11pxr mr-6pxr vertical-middle">사전 피로연</Text>
+              <Text display="block" className="mt-4pxr font-semibold text-black">2026.08.15, SATURDAY 12:00</Text>
+              <Text display="block" className="text-neutral-700 text-12pxr">마레몬스호텔</Text>
+            </div>
+
+            {/* 선 구분선 */}
+            <div className="w-full border-t border-black/10 my-2pxr" />
+
+            {/* 본식 정보 */}
+            <div>
+              <Text display="inline-block" className="font-bold text-neutral-600 border border-neutral-400 rounded-4pxr px-4pxr py-1pxr text-11pxr mr-6pxr vertical-middle">본식</Text>
+              <Text display="block" className="mt-4pxr font-semibold text-black">2026.09.05, SATURDAY 11:00</Text>
+              <Text display="block" className="text-neutral-700 text-12pxr">웨딩스퀘어</Text>
+            </div>
           </Flex>
         </SlideUp>
       </Flex>
