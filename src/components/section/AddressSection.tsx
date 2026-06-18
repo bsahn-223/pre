@@ -1,127 +1,99 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-
-import Address from "./Address";
-import Image from "next/image";
-import Navigations from "./Navigations";
-// RollingBanner 임포트 제거됨
+import React, { useEffect, useRef, useState } from "react";
+import Calendar from "../Calendar";
 import SlideUp from "../SlideUp";
 import Spacing from "../Spacing";
 import Text from "../Text";
 import Title from "./Title";
+import { useInterval } from "@/hooks/useInterval";
 import useIsInView from "@/hooks/useIsInView";
 
-const TITLE = ["", "LOCATION", " ", " "];
-const AddressSection = () => {
+const TITLE = ["WEDDING", "CALENDAR"];
+
+export default function CalendarSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [transitionIds, setTransitionIds] = useState<number[]>([]);
+  const [startTransition, setStartTransition] = useState(false);
+  const [callTimeout, setCallTimeout] = useState(false);
 
-  const intervalId = useRef<NodeJS.Timeout | null>(null);
-  const handleTransition = useCallback(() => {
-    // 순차적 화면 표시 로직
-    setTimeout(() => {
-      setTransitionIds((prev) => (prev.length === 0 ? [0, 1, 2, 3] : prev));
-    }, 0);
+  // 애니메이션 타이밍 로직
+  useInterval(() => {
+    if (!startTransition || transitionIds.length >= TITLE.length) return;
+    setTransitionIds((prev) => prev.concat(prev.length));
+  }, 50);
 
-    setTimeout(() => {
-      intervalId.current = setInterval(() => {
-        setTransitionIds((prev) => {
-          if (prev.length === TITLE.length + 3) {
-            clearInterval(intervalId.current!);
-            return prev;
-          }
-          return prev.concat(prev.length);
-        });
-      }, 50);
-    }, 200);
-
-    setTimeout(() => {
-      setTransitionIds((prev) => prev.concat(prev.length));
-    }, 500);
-
-    setTimeout(() => {
-      setTransitionIds((prev) =>
-        prev.concat([prev.length, prev.length + 1, prev.length + 2])
-      );
-    }, 700);
-  }, []);
-
-  useIsInView(ref, handleTransition);
+  useInterval(() => {
+    if (!startTransition || !callTimeout || transitionIds.length >= TITLE.length + 5) return;
+    setTransitionIds((prev) => prev.concat(prev.length));
+  }, 50);
 
   useEffect(() => {
-    if (transitionIds.length > TITLE.length + 6) {
-      clearInterval(intervalId.current!);
-      intervalId.current = null;
-    }
+    if (!startTransition) return;
+    setTimeout(() => setCallTimeout(true), 1000);
+  }, [startTransition]);
+
+  useEffect(() => {
+    if (transitionIds.length === TITLE.length + 2) setStartTransition(false);
   }, [transitionIds]);
 
+  useIsInView(ref, () => setStartTransition(true));
+
   return (
-    <>
-      <section ref={ref} id="address-section" className="w-full px-24pxr">
-        {TITLE.map((title, index) => (
-          <SlideUp key={index} show={transitionIds.includes(index)}>
-            <Title>{title}</Title>
-          </SlideUp>
-        ))}
-        <Spacing size={10} />
-        
-        {/* 주소 및 교통 안내 섹션 */}
-        <SlideUp show={transitionIds.includes(TITLE.length)}>
-          <Address
-            title="웨딩스퀘어 강변"
-            desc={`서울 광진구 광나루로 56길 85, 4층 아모르홀\n02.3424.7000`}
-          />
+    <section id="calendar-section" ref={ref} className="w-full px-24pxr">
+      {TITLE.map((title, index) => (
+        <SlideUp key={index} show={transitionIds.includes(index)}>
+          <Title key={title} display="block">
+            {title}
+          </Title>
         </SlideUp>
-        <Spacing size={20} />
-        
-        <SlideUp show={transitionIds.includes(TITLE.length + 1)}>
-          <Address
-            title="자가용 이용 시"
-            desc="네비게이션 검색 - 강변 테크노마트 (2시간 무료)"
-          />
-        </SlideUp>
-        <Spacing size={20} />
-        
-        <SlideUp show={transitionIds.includes(TITLE.length + 2)}>
-          <Address
-            title="지하철 이용 시"
-            desc="지하철 2호선 강변역(강변테크노마트 판매동 B1 연결)"
-          />
-        </SlideUp>
-        <Spacing size={20} />
-        
-        <SlideUp show={transitionIds.includes(TITLE.length + 3)}>
-          <Text
-            display="block"
-            className="w-full p-10pxr text-12pxr leading-22pxr bg-[#F4F4F4] text-[#474747] whitespace-pre-wrap"
-          >
-            {"•지하철 이용 : 2호선 강변역 1번 또는 2번 출구 방향으로 나오면 테크노마트 지하 1층과 바로 연결됩니다.\n•자가용 이용 : 지하 3층 또는 지하 4층의 100번대 구역에 주차하면 웨딩홀 전용 엘리베이터와 가장 가깝습니다."}
+      ))}
+
+      <Spacing size={25} />
+
+      {/* 1. 8월 사전 피로연 달력 세트 (인덱스 2) */}
+      <SlideUp show={transitionIds.includes(TITLE.length)} className="w-full">
+        <div className="w-full flex justify-between items-end pb-12pxr border-b border-black/5 mb-12pxr">
+          <Text display="block" className="text-[20px] font-bold text-black tracking-widest">
+            08 <span className="text-[13px] font-normal text-neutral-500 ml-4pxr">사전 피로연</span>
           </Text>
-        </SlideUp>
-        <Spacing size={20} />
-        
-        {/* 지도 및 네비게이션 섹션 */}
-        <SlideUp id="map" show={transitionIds.includes(TITLE.length + 4)}>
-          <Image
-            quality={100}
-            src={"/location.PNG"}
-            alt="map"
-            width={382}
-            height={245}
-            className="w-full"
-          />
-        </SlideUp>
+          <div className="text-right">
+            <Text display="block" className="text-[12px] text-neutral-500 font-medium">
+              15일 토요일 PM 12:00
+            </Text>
+            <Text display="block" className="text-[11px] text-neutral-400 mt-2pxr">
+              속초 마레몬스 호텔
+            </Text>
+          </div>
+        </div>
+        <Calendar>
+          <Calendar.Days />
+          <Calendar.Dates startDate={1} endDate={31} activeDate={15} startDayOffset={6} />
+        </Calendar>
+      </SlideUp>
 
-        <Spacing size={20} />
-        <SlideUp id="" show={transitionIds.includes(TITLE.length + 5)}>
-          <Navigations />
-        </SlideUp>
-      </section>
-      
-      {/* RollingBanner 및 하단 여백 제거 완료 */}
-    </>
+      <Spacing size={50} />
+
+      {/* 2. 9월 본식 달력 세트 (인덱스 3) */}
+      <SlideUp show={transitionIds.includes(TITLE.length + 1)} className="w-full">
+        <div className="w-full flex justify-between items-end pb-12pxr border-b border-black/5 mb-12pxr">
+          <Text display="block" className="text-[20px] font-bold text-black tracking-widest">
+            09 <span className="text-[13px] font-normal text-neutral-500 ml-4pxr">본식</span>
+          </Text>
+          <div className="text-right">
+            <Text display="block" className="text-[12px] text-neutral-500 font-medium">
+              5일 토요일 AM 11:00
+            </Text>
+            <Text display="block" className="text-[11px] text-neutral-400 mt-2pxr">
+              서울 강변역 웨딩스퀘어
+            </Text>
+          </div>
+        </div>
+        <Calendar>
+          <Calendar.Days />
+          <Calendar.Dates startDate={1} endDate={30} activeDate={5} startDayOffset={2} />
+        </Calendar>
+      </SlideUp>
+    </section>
   );
-};
-
-export default AddressSection;
+}
