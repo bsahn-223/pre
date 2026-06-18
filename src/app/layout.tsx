@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
 
-    title: "병섭, 희연 결혼합니다♡",
+    title: "[사전 피로연] 병섭, 희연 결혼합니다♡",
     locale: "ko_KR",
-    description: "9월 5일 토요일 오전 11시 웨딩스퀘어 강변 4층 아모르홀",
+    description: "8월 15일 토요일 오후 12시 속초 마레몬스호텔 지하1층 오션홀",
     images: [
       {
         url: "https://qudtjq.duckdns.org/welcome_wedding.JPEG", // Must be an absolute URL
