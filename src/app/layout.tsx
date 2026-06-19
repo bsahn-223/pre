@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
 
-    title: "[사전 피로연] 병섭, 희연 결혼합니다♡",
+    title: "[사전 피로연] 안의준의 장남 "병섭" 결혼합니다♡",
     locale: "ko_KR",
     description: "8월 15일 토요일 오후 12시 속초 마레몬스호텔 지하1층 오션홀",
     images: [
