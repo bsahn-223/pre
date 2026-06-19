@@ -4,8 +4,8 @@ const nextConfig = {
   output: 'export',
   
   // 2. 하위 리포지토리 경로 설정 (앞뒤에 슬래시 '/' 확인)
-  basePath: '/pre',
-  assetPrefix: '/pre/',
+  //basePath: '/pre',
+  //assetPrefix: '/pre/',
 
   webpack(config) {
     // Grab the existing rule that handles SVG imports
