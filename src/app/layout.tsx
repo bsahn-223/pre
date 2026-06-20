@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: "8월 15일 토요일 오후 12시 속초 마레몬스호텔 지하1층 오션홀",
     images: [
       {
-        url: "https://qudtjq.duckdns.org/pre_welcome_wedding.JPEG", // Must be an absolute URL
+        url: "https://qudtjq.duckdns.org/pre_wedding.JPEG", // Must be an absolute URL
         width: 720,
         height: 720
       }
